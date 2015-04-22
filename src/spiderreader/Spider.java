@@ -28,8 +28,10 @@ public class Spider
    * @param searchWord
    *            - The word or string that you are searching for
    */
-  public void search(String url, String searchWord)
+  public void search(String url, String searchWord,long start)
   {
+      System.out.println("Parseando en: " + start
+                                    + " miliseg");
       while(this.pagesVisited.size() < MAX_PAGES_TO_SEARCH)
       {
           String currentUrl;
@@ -49,14 +51,20 @@ public class Spider
           boolean success = leg.searchForWord(searchWord);
           if(success)
           {
-              Pattern pat= Pattern.compile("^<p>(.*"+searchWord+".*)<p>$");
-              Matcher mat= pat.matcher(leg.getHtmlDocument().body().text());
-              while(mat.find()){
-                  System.out.println(mat.group());                  
-              }
-              System.out.println(leg.getHtmlDocument().body().text());
-              System.out.println(String.format("**Encontrada** La palabra %s encontrada en %s", searchWord, currentUrl));
-              break;
+            Pattern pat= Pattern.compile("(.*\\s"+searchWord.toLowerCase()+")\\s"/*"^<p>(.*"+searchWord+".*)<p>$"*/);
+            Matcher mat= pat.matcher(leg.getHtmlDocument().body().text());
+            System.out.println("Resultado");
+            mat.find();
+           /* String resultado = mat.group(0);
+            System.out.println(resultado);*/
+            /*while(mat.find()){
+                System.out.println(mat.find());                  
+            }*/
+            System.out.println("Fin Resultado");
+            //System.out.println(leg.getHtmlDocument().body().text());
+            System.out.println(String.format("**Encontrada** La palabra %s encontrada en %s", searchWord, currentUrl));
+            //Si encuentra una palabra no tiene que parar tiene que seguir buscando en otras paginas
+            //break;
           }
           this.pagesToVisit.addAll(leg.getLinks());
       }

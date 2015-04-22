@@ -25,18 +25,24 @@ public class LinkThread extends Thread{
     @Override
     public void run() {
 
+            /*
+                String tipoEvento;
+                String estadoSitio;
+                String paginaVisitada;
+                String tiempoCarga;
+                Date timestamp
+            */
             System.out.println("Procesando: " + this.link + " Empezando en: "
                                     +(System.currentTimeMillis() - this.initialTime) 
                                     + " miliseg");
 
             Spider spider = new Spider();
             long start = System.currentTimeMillis();
-            System.out.println("Parseando en: " + start
-                                    + " miliseg");
-            spider.search(link, word);
-            System.out.println("Paseo terminado en: "+(System.currentTimeMillis() - start) 
-                                    + " miliseg");
-
+            
+            spider.search(link, word,start);
+            /*System.out.println("Paseo terminado en: "+(System.currentTimeMillis() - start) 
+                                    + " miliseg");*/
+            
             System.out.println("Se Termino de procesar " + this.link + " en el tiempo: " 
                                             + (System.currentTimeMillis() - this.initialTime)
                                             + " miliseg");
